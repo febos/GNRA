@@ -6,6 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+#tools and data
+ARTEM
+urslib2
+urslib2_repo
+PDB
+
 # Distribution / packaging
 .Python
 build/
