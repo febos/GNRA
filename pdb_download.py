@@ -32,24 +32,26 @@ def DownloadPDB():
 
         x = requests.get("https://search.rcsb.org/rcsbsearch/v2/query?json="+query)
 
-        for row in x.json()["result_set"]:
-            print("downloading {}...".format(row['identifier']),end=' ')
+        if "result_set" in x.json():
+            
+            for row in x.json()["result_set"]:
+                print("downloading {}...".format(row['identifier']),end=' ')
 
-            #skip if exists
-            if os.path.exists(os.path.join(folder,"{}.cif").format(row['identifier']))\
-               and os.path.getsize(os.path.join(folder,"{}.cif".format(row['identifier']))) > 0:
-                print('SKIPPED')
+                #skip if exists
+                if os.path.exists(os.path.join(folder,"{}.cif").format(row['identifier']))\
+                   and os.path.getsize(os.path.join(folder,"{}.cif".format(row['identifier']))) > 0:
+                    print('SKIPPED')
+                    empty = False
+                    continue
+                    
+                r = requests.get("https://files.rcsb.org/download/{}.cif.gz".format(row['identifier']))
+                filename = os.path.join(folder,"{}.cif.gz".format(row['identifier']))
+                open(filename, 'wb').write(r.content)
+                os.system('gunzip ' + filename)
+                print('DONE')
                 empty = False
-                continue
-                
-            r = requests.get("https://files.rcsb.org/download/{}.cif.gz".format(row['identifier']))
-            filename = os.path.join(folder,"{}.cif.gz".format(row['identifier']))
-            open(filename, 'wb').write(r.content)
-            os.system('gunzip ' + filename)
-            print('DONE')
-            empty = False
 
-        start += rows
+            start += rows
         
 
 
