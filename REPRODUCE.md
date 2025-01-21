@@ -1,7 +1,7 @@
 
-## PDB search
+# Steps to reproduce the results (Linux-based)
 
-Prepare ARTEM and urslib2
+##Prepare ARTEM and urslib2
 
  - "git clone https://github.com/david-bogdan-r/ARTEM"
  
@@ -13,11 +13,15 @@ Prepare ARTEM and urslib2
  
  - set the path to DSSR in urslib2/config.py [TODO]()
 
-Prepare a search database
+##Prepare a search database
 
  - "pip install requests"
  
  - "python3 pdb_download.py" 
+ 
+ - install [UCSF ChimeraX](https://www.cgl.ucsf.edu/chimerax/)
+ 
+ - "python3 pdb_process.py" (keep only the 1st models + add interacting symmetry mates for X-ray structures)
  
 ======================TODO==============================
  
