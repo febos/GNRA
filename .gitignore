@@ -11,6 +11,8 @@ ARTEM
 urslib2
 urslib2_repo
 PDB
+PDB1
+PDB1cc
 
 # Distribution / packaging
 .Python

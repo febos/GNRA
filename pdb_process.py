@@ -1,6 +1,42 @@
 
+import os, glob
 
-from urslib2 import
+from urslib2 import SplitmmCIF
 
 
-#echo "open 3ivk.cif; crystalcontacts #1 distance 6; save 3ivk_cc.cif format mmcif" | chimerax --nogui
+if __name__ == "__main__":
+
+    source   = "PDB"
+    firsts   = "PDB1"
+    crystals = "PDB1cc"
+
+    os.makedirs(firsts,   exist_ok = True)
+    os.makedirs(crystals, exist_ok = True)
+
+    #SplitmmCIF.All(source,firsts, m1only = True)
+
+    cnt = 0
+
+    for first in sorted(glob.glob(os.path.join(firsts,"*.cif1"))):
+
+        crystal = os.path.join(crystals,os.path.basename(first)[:-1])
+        cnt += 1
+
+        xray = False
+        with open(first) as inp:
+            for line in inp:
+                if "X-RAY DIFFRACTION" in line.upper():
+                    xray = True
+                    break
+        if os.path.exists(crystal) and os.path.getsize(crystal) > 0:
+            print(cnt, first, '->', end=' ')
+            print(crystal, "(skipped)")
+        else:
+            print(cnt, first, '->', end=' ')
+            os.system('echo "open {} format mmcif; {}'.format(first,
+                                                              "crystalcontacts #1 distance 6;"*xray)+\
+                      ' save {} format mmcif" | chimerax --nogui'.format(crystal))
+            print(crystal)
+
+
+    # COPY THE MISSING ENTRIES, e.g. 180D 181D
