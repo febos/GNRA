@@ -13,6 +13,7 @@ urslib2_repo
 PDB
 PDB1
 PDB1cc
+*.tmp
 
 # Distribution / packaging
 .Python

@@ -25,9 +25,14 @@ if __name__ == "__main__":
         xray = False
         with open(first) as inp:
             for line in inp:
-                if "X-RAY DIFFRACTION" in line.upper():
+                if line.startswith("_exptl.method") and "X-RAY DIFFRACTION" in line.upper():
                     xray = True
                     break
+
+        # Don't derive crystal contacts for files larger 10MB (~ribosomes)
+        if os.path.getsize(first) > 10**7:
+            xray = False
+                
         if os.path.exists(crystal) and os.path.getsize(crystal) > 0:
             print(cnt, first, '->', end=' ')
             print(crystal, "(skipped)")
@@ -38,5 +43,6 @@ if __name__ == "__main__":
                       ' save {} format mmcif" | chimerax --nogui'.format(crystal))
             print(crystal)
 
-
-    # COPY THE MISSING ENTRIES, e.g. 180D 181D
+        # COPY THE MISSING ENTRIES, e.g. 180D 181D
+        if not os.path.exists(crystal):
+            os.system("cp {} {}".format(first,crystal))
