@@ -70,12 +70,14 @@ best_motif, best_median = '', 10
 
 N = len(motifs)
 for m in motifs:
+    print(m)
+    print(sorted(rmsds[m]))
     median = sorted(rmsds[m])[N//2]
     if median < best_median:
         best_motif = m
         best_median = median
 
 print("CENTROID:")
-print(m)
+print(best_motif)
 print("Median RMSD:",round(best_median,3))
     
