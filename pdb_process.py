@@ -13,7 +13,7 @@ if __name__ == "__main__":
     os.makedirs(firsts,   exist_ok = True)
     os.makedirs(crystals, exist_ok = True)
 
-    #SplitmmCIF.All(source,firsts, m1only = True)
+    SplitmmCIF.All(source,firsts, m1only = True)
 
     cnt = 0
 
