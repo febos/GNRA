@@ -28,6 +28,9 @@
 
  - [process the pdb entries == 1st models + crystal contacts]()
  
+ - "python3 ARTEM/artem.py r=PDB1cc q=8VTW_CGAAAG.cif rres=# rseed=#1 rformat=cif sizemin=5 rmsdsizemax=0.25 rnosub=1 silent=1 > CGAAAG.artem"
+ - "python3 ARTEM/artem.py r=PDB1cc q=8VTW_GAAA.cif rres=# rseed=#1 rformat=cif sizemin=3 rmsdsizemax=0.25 qrst="/1A:_2375" rnosub=1 silent=1 > GAAA.artem"
+ 
 Run ARTEM
 
  - "python3 ARTEM/artem.py r=./PDB/*.cif q=refmotifs/1ffk_0_kt7.cif rres=#1 qres=":_77_82 :_92_94 :_97_100" sizemin=12 rmsdmax=2.0 rnosub=1 qrst=":_79_81 :_93_94 :_97_98" silent=True > 1ffk_hits.tsv"
