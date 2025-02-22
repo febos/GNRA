@@ -29,6 +29,7 @@ with open("processed_hits.tsv") as inp:
 
 with open("annotated_hits.tsv","w") as outp:
     for k,pdb in enumerate(sorted(hits.keys())):
+
         print(pdb, k+1)
         pdbmodel = "PDB1/{}.cif1".format(pdb)
         outmodel = "PDB1dssr/{}.out1".format(pdb)
@@ -74,7 +75,7 @@ with open("annotated_hits.tsv","w") as outp:
             confs = []
             for n1 in rs:
                 conf = ['NA','NA']
-                if n1 != '-':
+                if n1 != '-' and n1[2:] in model.summary:
                     desc = model.summary[n1[2:]]
                     if "~C2'-endo," in desc:
                         conf[1] = "~C2'-endo"
