@@ -1,7 +1,7 @@
 
 # Steps to reproduce the results (Linux-based)
 
-##Prepare ARTEM and urslib2
+## Prepare ARTEM and urslib2
 
  - "git clone https://github.com/david-bogdan-r/ARTEM"
  
@@ -13,7 +13,7 @@
  
  - set the path to DSSR in urslib2/config.py 
 
-##Prepare the search database and the reference instance 
+## Prepare the search database and the reference instance 
 
  - "pip install requests"
  
@@ -25,7 +25,7 @@
  
  - "python3 choose_GNRA_reference.py"
  
-##Obtain, annotate, and filter the GNRA matches
+## Obtain, annotate, and filter the GNRA matches
 
  - "python3 ARTEM/artem.py r=PDB1cc q=8VTW_CGAAAG.cif rres=# rseed=#1 rformat=cif sizemin=5 rmsdsizemax=0.25 rnosub=1 silent=1 > CGAAAG.artem"
  
