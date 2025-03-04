@@ -11,9 +11,9 @@
  
  - "ln -s urslib2_repo/urslib2 urslib2"
  
- - set the path to DSSR in urslib2/config.py [TODO]()
+ - set the path to DSSR in urslib2/config.py 
 
-##Prepare a search database
+##Prepare the search database and the reference instance 
 
  - "pip install requests"
  
@@ -23,28 +23,20 @@
  
  - "python3 pdb_process.py" (keep only the 1st models + add interacting symmetry mates for X-ray structures)
  
-======================TODO==============================
+ - "python3 choose_GNRA_reference.py"
  
+##Obtain, annotate, and filter the GNRA matches
 
- - [process the pdb entries == 1st models + crystal contacts]()
- 
  - "python3 ARTEM/artem.py r=PDB1cc q=8VTW_CGAAAG.cif rres=# rseed=#1 rformat=cif sizemin=5 rmsdsizemax=0.25 rnosub=1 silent=1 > CGAAAG.artem"
+ 
  - "python3 ARTEM/artem.py r=PDB1cc q=8VTW_GAAA.cif rres=# rseed=#1 rformat=cif sizemin=3 rmsdsizemax=0.25 qrst="/1A:_2375" rnosub=1 silent=1 > GAAA.artem"
  
-Run ARTEM
-
- - "python3 ARTEM/artem.py r=./PDB/*.cif q=refmotifs/1ffk_0_kt7.cif rres=#1 qres=":_77_82 :_92_94 :_97_100" sizemin=12 rmsdmax=2.0 rnosub=1 qrst=":_79_81 :_93_94 :_97_98" silent=True > 1ffk_hits.tsv"
+ - "python3 postprocess_artem.py"
  
- - "python3 ARTEM/artem.py r=./PDB/*.cif q=refmotifs/3d2g_A_kj.cif rres=#1 qres=":_8_10 :_36_38 :_42 :_44_46 :_69_72" sizemin=12 rmsdmax=2.0 rnosub=1 qrst=":_9 :_37_38 :_42 :_44 :_71_72" silent=True > 3d2g_hits.tsv"
-
-Merge identical hits between the motifs
-
- - "python3 unique_hits.py"
+ - "python3 run_DSSR.py"
  
-Prepare urslib2
+ - "python3 annotate_hits.py"
  
+ - "python3 filter_hits.py"
 
 
-Annotate hits
-
- - see post-processing.ipynb
