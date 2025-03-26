@@ -123,7 +123,7 @@ def ParseCIF(filepath):
     return Entry
 
 
-def CrystalContacts(pdb,hits, thresh = 4.0, farthresh = 20.0):
+def CrystalContacts(pdb, hits, thresh = 4.0, farthresh = 20.0):
 
     idstrs = {'-':'0'}
 
@@ -159,6 +159,60 @@ def CrystalContacts(pdb,hits, thresh = 4.0, farthresh = 20.0):
 
     return [''.join([idstrs[idstr] for idstr in hit[0]]) for hit in hits]
 
+def AmbiguousConflicting(hits):
+
+    residues = [x[0] for x in hits]
+
+    merged = []
+
+    for st in zip(*residues):
+        pos = {'-',}
+        if pos == set(st):
+            merged.append(pos)
+        else:
+            merged.append({x for x in st if x!='-'})
+
+    ambig = any(merged[i] & merged[j] and (merged[i] & merged[j]) != {'-',}
+                for i in range(len(merged)-1) for j in range(i+1,len(merged)))
+
+    confl = any(len(st) > 1 for st in merged) # Never happens, yay!
+         
+    return ambig, confl
+
+
+def ChooseFromAmbiguous(hits):
+    """choose largest with best RMSD"""
+    sorted_hits = sorted(hits, key = lambda x: (-int(x[3]),float(x[4])))
+    return sorted_hits[0]
+
+
+def MergeUnambiguous(hits):
+
+    residues = [x[0] for x in hits]
+    bases    = [x[2] for x in hits]
+    merged  = []
+    mergedb = []
+
+    for st in zip(*residues):
+        pos = {'-',}
+        if pos == set(st):
+            merged.append(pos)
+        else:
+            merged.append({x for x in st if x!='-'})
+    for st in zip(*bases):
+        pos = {'-',}
+        if pos == set(st):
+            mergedb.append(pos)
+        else:
+            mergedb.append({x for x in st if x!='-'})
+
+    merged = [list(x)[0] for x in merged]
+
+    return [merged,
+            ''.join(['1' if x!='-' else '0' for x in merged]),
+            [list(x)[0] for x in mergedb],
+            str(len([x for x in merged if x!='-'])),
+            '100','100','100']
 
 
 hits56 = {}
@@ -200,22 +254,70 @@ for file,pool in (("CGAAAG.artem", hits56),
 
 hits = {}
 
+merged_hits = {}
+
 with open("processed_hits.tsv",'w') as outp:
 
     for pdb in sorted(set(hits56.keys()) | set(hits34.keys())):
         print(pdb)
         hits[pdb] = []
+        merged_hits[pdb] = []
 
-        for hit in hits56[pdb][::-1]:
-            hits[pdb].append(hit)
+        for hit in hits56[pdb][::-1]+hits34[pdb][::-1]:
+            nested = False
+            added  = False
+            for i in range(len(hits[pdb])):
+                for hit2 in hits[pdb][i]:
+                    if all(x==y or x=='-' for x,y in zip(hit[0],hit2[0])):
+                        nested = True
+                        break
+                    if all(x==y or x=='-' or y=='-' for x,y in zip(hit[0],hit2[0])):
+                        hits[pdb][i].append(hit)
+                        added = True
+                        break
+                if nested or added:
+                    break
+            if not added and not nested:
+                hits[pdb].append([hit,])
+                
+                    
+        for i in range(len(hits[pdb])):
+            if len(hits[pdb][i]) > 1:
+
+                ambig, confl = AmbiguousConflicting(hits[pdb][i])
+                    
+            
+                if confl:
+                    print()
+                    print(ambig, confl)
+                    for x in hits[pdb][i]:
+                        print(x)
+                    print()
+
+                else:
+                    if ambig:
+                        merged_hits[pdb].append(ChooseFromAmbiguous(hits[pdb][i]))
+                    else:
+                        merged_hits[pdb].append(MergeUnambiguous(hits[pdb][i]))
+                                            
+            else:
+                merged_hits[pdb].append(hits[pdb][i][0])
+
+        ################################
+        #continue
+        hits[pdb] = merged_hits[pdb]
+    
+
+        #for hit in hits56[pdb][::-1]:
+        #    hits[pdb].append(hit)
 
         #add 3/4-hits only if they don't match any of the 5/6-hits
-        for hit in hits34[pdb][::-1]:
-            for hit2 in hits56[pdb]:
-                if all(x==y or x=='-' for x,y in zip(hit[0],hit2[0])):
-                    break
-            else:
-                hits[pdb].append(hit)
+        #for hit in hits34[pdb][::-1]:
+        #    for hit2 in hits56[pdb]:
+        #        if all(x==y or x=='-' for x,y in zip(hit[0],hit2[0])):
+        #            break
+        #    else:
+        #        hits[pdb].append(hit)
 
         crystalcontacts = CrystalContacts(pdb,hits[pdb])
         

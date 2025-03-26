@@ -27,9 +27,9 @@
  
 ## Obtain, annotate, and filter the GNRA matches
 
- - "python3 ARTEM/artem.py r=PDB1cc q=8VTW_CGAAAG.cif rres=# rseed=#1 rformat=cif sizemin=5 rmsdsizemax=0.25 rnosub=1 silent=1 > CGAAAG.artem"
+ - "python3 ARTEM/artem.py r=PDB1cc q=8VTW_CGAAAG.cif rres=# rseed=#1 rformat=cif sizemin=5 rmsdsizemax=0.25 rnosub=1 silent=1 matchrange=5 trim=1 > CGAAAG.artem"
  
- - "python3 ARTEM/artem.py r=PDB1cc q=8VTW_GAAA.cif rres=# rseed=#1 rformat=cif sizemin=3 rmsdsizemax=0.25 qrst="/1A:_2375" rnosub=1 silent=1 > GAAA.artem"
+ - "python3 ARTEM/artem.py r=PDB1cc q=8VTW_GAAA.cif rres=# rseed=#1 rformat=cif sizemin=3 rmsdsizemax=0.25 qrst="/1A:_2375" rnosub=1 silent=1 matchrange=5 trim=1 > GAAA.artem"
  
  - "python3 postprocess_artem.py"
  
