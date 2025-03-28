@@ -89,8 +89,11 @@ with open("annotated_hits.tsv","w") as outp:
 
             # GA-like bp
             ga = '-'
+            flbp = '-'
             resG = rs[1][2:]
             resA = rs[-2][2:]
+            res5 = rs[0][2:]
+            res3 = rs[-1][2:]
             if resG and resA:
                 for bp in model.bpairs:
                     pair = bp['NUCL1'][0]+bp['NUCL2'][0]
@@ -99,6 +102,17 @@ with open("annotated_hits.tsv","w") as outp:
                         break
                     elif pair == resA+resG:
                         ga = '-'.join(bp['BOND'].split('-')[::-1]) + ',' + bp['CLASS'][1][0] +\
+                             bp['CLASS'][1][2]+bp['CLASS'][1][1]
+                        break
+
+            if res5 and res3:
+                for bp in model.bpairs:
+                    pair = bp['NUCL1'][0]+bp['NUCL2'][0]
+                    if pair == res5+res3:
+                        flbp = bp['BOND']+',' +bp['CLASS'][1]
+                        break
+                    elif pair == res3+res5:
+                        flbp = '-'.join(bp['BOND'].split('-')[::-1]) + ',' + bp['CLASS'][1][0] +\
                              bp['CLASS'][1][2]+bp['CLASS'][1][1]
                         break
 
@@ -144,7 +158,7 @@ with open("annotated_hits.tsv","w") as outp:
 
             outp.write('\t'.join([str(x) for x in [pdb, size, rmsd, rmsdsize, resrmsd, matchmask, *rs, *bs, crystalmask,
                                                    *connects, *rels, *elems, loopseq, looplen,
-                                                   *confs, ga, *inters, uts, fams, classes]])+'\n')
+                                                   *confs, ga, flbp, *inters, uts, fams, classes]])+'\n')
             
             
             

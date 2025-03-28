@@ -11,14 +11,14 @@ with open("annotated_hits.tsv") as inp:
             
             pdb, size, rmsd, rmsdsize, resrmsd, matchmask,\
             rs, bs, crystalmask, conns, rels, elems,\
-            loopseq, loopsize, confs, gabp, inters,\
+            loopseq, loopsize, confs, gabp, flbp, inters,\
             ut, rfam, nrclass = *hit[:6],hit[6:12],hit[12:18],hit[18],hit[19:24],hit[24:29],\
-                                hit[29:35],hit[35],hit[36],hit[37:43],hit[43],hit[44:50],\
-                                hit[50],hit[51],hit[52]
+                                hit[29:35],hit[35],hit[36],hit[37:43],hit[43],hit[44],hit[45:51],\
+                                hit[51],hit[52],hit[53]
             rmsd = float(rmsd)
             desc = ':'.join([str(x) for x in [size, matchmask, *bs, crystalmask,
                                               *conns, *rels, *elems, loopseq,
-                                              loopsize, confs, gabp, inters,
+                                              loopsize, confs, gabp, flbp, inters,
                                               ut, rfam, nrclass]])
 
             if desc not in bag or bag[desc][0] > rmsd:
@@ -41,15 +41,15 @@ with open("nr_hits.tsv") as inp:
             
             pdb, size, rmsd, rmsdsize, resrmsd, matchmask,\
             rs, bs, crystalmask, conns, rels, elems,\
-            loopseq, loopsize, confs, gabp, inters,\
+            loopseq, loopsize, confs, gabp, flbp, inters,\
             ut, rfam, nrclass = *hit[:6],hit[6:12],hit[12:18],hit[18],hit[19:24],hit[24:29],\
-                                hit[29:35],hit[35],hit[36],hit[37:43],hit[43],hit[44:50],\
-                                hit[50],hit[51],hit[52]
+                                hit[29:35],hit[35],hit[36],hit[37:43],hit[43],hit[44],hit[45:51],\
+                                hit[51],hit[52],hit[53]
             rmsd = float(rmsd)
             
             desc = ':'.join([str(x) for x in [size, matchmask, *bs, crystalmask,
                                               *conns, *rels, *elems, loopseq,
-                                              loopsize, confs, gabp, inters,
+                                              loopsize, confs, gabp, flbp, inters,
                                               ut]])
 
             if desc not in counts:
@@ -67,4 +67,3 @@ with open("unique_hits.tsv","w") as outp:
                    ','.join(sorted(counts[desc][0]))+'\t'+','.join(sorted(counts[desc][1]))+'\n')
 
 
-## TODO == unique_hits.tsv
