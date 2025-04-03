@@ -81,12 +81,12 @@ with open("nr_hits.tsv") as inp:
             counts[desc][1].add(nrclass)
 
             if desc not in bag or bag[desc][0] > rmsd:
-                bag[desc] = [rmsd,cnt,line,topo,link]   
+                bag[desc] = [rmsd,cnt,line,topo,link,pdb]   
             
 
 with open("unique_hits.tsv","w") as outp:
-    for cnt,line, desc, topo,link in sorted([(v[1],v[2],k,v[3],v[4]) for k,v in bag.items()]):
-        outp.write(line.strip()+'\t'+str(len(counts[desc][0]))+'\t'+str(len(counts[desc][1]))+'\t'+\
+    for cnt,line, desc, topo,link,pdb in sorted([(v[1],v[2],k,v[3],v[4],v[5]) for k,v in bag.items()]):
+        outp.write(line.strip().replace(pdb,"pdb_0000"+pdb.lower())+'\t'+str(len(counts[desc][0]))+'\t'+str(len(counts[desc][1]))+'\t'+\
                    topo+'\t'+\
                    ','.join(sorted(counts[desc][0]))+'\t'+','.join(sorted(counts[desc][1]))+'\t'+link+'\n')
 
@@ -146,11 +146,11 @@ with open("nr_hits.tsv") as inp:
             counts[desc][1].add(nrclass)
 
             if desc not in bag or bag[desc][0] > rmsd:
-                bag[desc] = [rmsd,cnt,line,topo,link]   
+                bag[desc] = [rmsd,cnt,line,topo,link,pdb]   
             
 
 with open("unique_topologies.tsv","w") as outp:
-    for cnt,line, desc, topo,link in sorted([(v[1],v[2],k,v[3],v[4]) for k,v in bag.items()]):
-        outp.write(line.strip()+'\t'+str(len(counts[desc][0]))+'\t'+str(len(counts[desc][1]))+'\t'+\
+    for cnt,line, desc, topo,link,pdb in sorted([(v[1],v[2],k,v[3],v[4],v[5]) for k,v in bag.items()]):
+        outp.write(line.strip().replace(pdb,"pdb_0000"+pdb.lower())+'\t'+str(len(counts[desc][0]))+'\t'+str(len(counts[desc][1]))+'\t'+\
                    topo+'\t'+\
                    ','.join(sorted(counts[desc][0]))+'\t'+','.join(sorted(counts[desc][1]))+'\t'+link+'\n')
