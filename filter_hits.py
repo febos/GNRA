@@ -22,12 +22,12 @@ with open("annotated_hits.tsv") as inp:
                                               ut, rfam, nrclass]])
 
             if desc not in bag or bag[desc][0] > rmsd:
-                bag[desc] = [rmsd,cnt,line]   
+                bag[desc] = [rmsd,cnt,line, pdb]   
             
 
 with open("nr_hits.tsv","w") as outp:
-    for cnt,line in sorted([(v[1],v[2]) for k,v in bag.items()]):
-        outp.write(line)
+    for cnt,line,pdb in sorted([(v[1],v[2],v[3]) for k,v in bag.items()]):
+        outp.write(line.replace(pdb,"pdb_0000"+pdb.lower()))
     
 bag = {}
 counts = {}
@@ -86,16 +86,10 @@ with open("nr_hits.tsv") as inp:
 
 with open("unique_hits.tsv","w") as outp:
     for cnt,line, desc, topo,link,pdb in sorted([(v[1],v[2],k,v[3],v[4],v[5]) for k,v in bag.items()]):
-        outp.write(line.strip().replace(pdb,"pdb_0000"+pdb.lower())+'\t'+str(len(counts[desc][0]))+'\t'+str(len(counts[desc][1]))+'\t'+\
+        outp.write(line.strip()+'\t'+str(len(counts[desc][0]))+'\t'+str(len(counts[desc][1]))+'\t'+\
                    topo+'\t'+\
                    ','.join(sorted(counts[desc][0]))+'\t'+','.join(sorted(counts[desc][1]))+'\t'+link+'\n')
 
-
-
-
-with open("nr_hits.tsv","w") as outp:
-    for cnt,line in sorted([(v[1],v[2]) for k,v in bag.items()]):
-        outp.write(line)
     
 bag = {}
 counts = {}
@@ -151,6 +145,6 @@ with open("nr_hits.tsv") as inp:
 
 with open("unique_topologies.tsv","w") as outp:
     for cnt,line, desc, topo,link,pdb in sorted([(v[1],v[2],k,v[3],v[4],v[5]) for k,v in bag.items()]):
-        outp.write(line.strip().replace(pdb,"pdb_0000"+pdb.lower())+'\t'+str(len(counts[desc][0]))+'\t'+str(len(counts[desc][1]))+'\t'+\
+        outp.write(line.strip()+'\t'+str(len(counts[desc][0]))+'\t'+str(len(counts[desc][1]))+'\t'+\
                    topo+'\t'+\
                    ','.join(sorted(counts[desc][0]))+'\t'+','.join(sorted(counts[desc][1]))+'\t'+link+'\n')
