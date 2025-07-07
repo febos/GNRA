@@ -3,7 +3,7 @@ Exploring GNRA tetraloop-like motifs in nucleic acid 3D structures
 
 ## Reference
 
-[TODO](#)
+[J.M. Bujnicki, E.F. Baulin (2025) Exploring GNRA tetraloop-like motifs in nucleic acid 3D structures. bioRxiv. DOI: 10.1101/2025.07.03.663028](https://doi.org/10.1101/2025.07.03.663028)
 
 ## Check out [our other developments](https://github.com/febos/wiki)
 
