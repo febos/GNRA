@@ -39,4 +39,14 @@
  
  - "python3 filter_hits.py"
 
+## UMAC variant
 
+ - "python3 ARTEM/artem.py r=PDB1cc q=1NYB_CUAACC.pdb rres=# rseed=#1 rformat=cif sizemin=5 rmsdsizemax=0.25 rnosub=1 silent=1 matchrange=5 trim=1 > CUAACC.artem"
+ 
+ - "python3 ARTEM/artem.py r=PDB1cc q=1NYB_UAAC.pdb rres=# rseed=#1 rformat=cif sizemin=3 rmsdsizemax=0.25 qrst="/B:_11" rnosub=1 silent=1 matchrange=5 trim=1 > UAAC.artem"
+ 
+## UAA/GAN variant
+
+ - "python3 ARTEM/artem.py r=PDB1cc q=4V72_UAAGAN6.pdb rres=# rseed=#1 rformat=cif sizemin=5 rmsdsizemax=0.25 rnosub=1 silent=1 matchrange=5 trim=1 > UAAGAN6.artem"
+ 
+ - "python3 ARTEM/artem.py r=PDB1cc q=4V72_UAAGAN4.pdb rres=# rseed=#1 rformat=cif sizemin=3 rmsdsizemax=0.25 qrst="/BA:_1377" rnosub=1 silent=1 matchrange=5 trim=1 > UAAGAN4.artem"
