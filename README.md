@@ -17,6 +17,14 @@ Manuscript figures
 
 The representative matches of the twelve recurrent backbone topology GNRA-tetraloop motif variants in PDB format
 
+### highres_filter
+
+The materials when applying 4.0 angstrom resolution threshold for PDB entries
+
+### reference_bias
+
+The materials when searching with alternative references (UMAC and UAA/GAN)
+
 ### files
 
 - **8VTW_CGAAAG.cif** - The six-residue reference in mmCIF format
@@ -38,9 +46,13 @@ The representative matches of the twelve recurrent backbone topology GNRA-tetral
 - **choose_GNRA_reference.py** - Python script to select the GNRA tetraloop motif reference
 - **filter_hits.py** - Python script to filter redundant matches
 - **nr_hits.tsv** - The list of non-redundant matches
+- **nr_hits_multichain.tsv** - The list of multi-chain matches
 - **nrlist_3.370_all.csv** - [The BGSU representative set of RNA structures](https://rna.bgsu.edu/rna3dhub/nrlist)
+- **overlap_artem_HL_85603.2.tsv** - RNA3DMotifAtlas-ARTEM benchmark data
 - **pdb_download.py** - Python script to download nucleic acid-containing PDB entries
 - **pdb_process.py** - Python script to process the PDB entries
+- **pdb_resol.py** - Python script to retrieve resolutions of the PDB entries
+- **pdb_resol.tsv** - The list of resolutions of the PDB entries
 - **postprocess_artem.py** - Python script to parse ARTEM matches
 - **processed_hits.tsv** - The list of parsed ARTEM matches
 - **run_DSSR.py** - Python script to run DSSR annotations
